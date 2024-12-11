@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel - File Management</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .file-list {
+        margin-top: 20px;
+      }
+      .file-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+      }
+      .file-actions button {
+        margin-left: 10px;
+      }
+      .back-link {
+        display: block;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/" class="back-link">← Back to Upload Page</a>
+    <h2>Admin Panel - File Management</h2>
+    <div id="fileList" class="file-list">
+      <!-- Files will be listed here -->
+    </div>
+
+    <script src="admin.js"></script>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File Upload System</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .upload-container {
+        border: 2px dashed #ccc;
+        padding: 20px;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .success-message {
+        color: green;
+        display: none;
+        margin-top: 10px;
+      }
+      .error-message {
+        color: red;
+        display: none;
+        margin-top: 10px;
+      }
+      .admin-link {
+        display: block;
+        margin-top: 20px;
+        text-align: right;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="upload-container">
+      <h2>File Upload System</h2>
+      <input type="file" id="fileInput" multiple />
+      <button onclick="uploadFiles()">Upload Files</button>
+      <div id="successMessage" class="success-message">
+        Files uploaded successfully!
+      </div>
+      <div id="errorMessage" class="error-message">Error uploading files.</div>
+    </div>
+    <a href="/admin.html" class="admin-link">Go to Admin Panel</a>
+
+    <script src="upload.js"></script>
+  </body>
+</html>
