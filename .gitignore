@@ -1,4 +1,2 @@
 .env
-vercel.json
 node_modules/
-.vercel
