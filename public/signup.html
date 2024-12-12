@@ -177,13 +177,29 @@
 </head>
 <body>
   <div class="signup-container">
-    <h2>Sign-Up</h2>
+    <!-- <h2>Sign-Up</h2>
   <form id="signupForm">
     <input type="text" id="username" placeholder="Username" required />
     <input type="password" id="password" placeholder="Password" required />
     <input type="text" id="name" placeholder="Name" />
     <button type="submit">Sign-Up</button>
+  </form> -->
+
+  <h2>Signup</h2>
+  <form action="https://your-vercel-deployed-url/api/signup" method="POST"  id="signupForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required><br><br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required><br><br>
+
+    <label for="name">Full Name:</label>
+    <input type="text" id="name" name="name" required><br><br>
+
+    <button type="submit">Sign Up</button>
   </form>
+
+  <p>Already have an account? <a href="login.html">Login here</a></p>
   </div>
 
   <script>

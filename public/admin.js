@@ -147,6 +147,14 @@ async function loadFiles() {
     window.location.href = "/login.html";
     return;
   }
+  // Add styles to document
+const styleSheet = document.createElement("style");
+styleSheet.textContent = styles;
+document.head.appendChild(styleSheet);
+
+// Initialize
+document.addEventListener("DOMContentLoaded", loadFiles);
+
 
   // Process file list...
 }
@@ -217,10 +225,3 @@ const styles = `
   }
 `;
 
-// Add styles to document
-const styleSheet = document.createElement("style");
-styleSheet.textContent = styles;
-document.head.appendChild(styleSheet);
-
-// Initialize
-document.addEventListener("DOMContentLoaded", loadFiles);

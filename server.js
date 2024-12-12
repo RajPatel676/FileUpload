@@ -4,7 +4,7 @@ const express = require("express");
 const multer = require("multer");
 const mongoose = require("mongoose");
 const { GridFSBucket, ObjectId } = require("mongodb");
-const User = require("./models/userModel");
+const User = require("./models/userModel.js");
 const jwt = require("jsonwebtoken");
 
 
@@ -19,7 +19,7 @@ const connectDB = async () => {
   }
 
   try {
-    await mongoose.connect(process.env.MONGO_URI, {
+    await mongoose.connect("mongodb+srv://rp2737188:eCG3XsG1dU5bzrNc@cluster0.yqqb3.mongodb.net/", {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
