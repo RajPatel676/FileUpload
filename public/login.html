@@ -1,0 +1,213 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+</head>
+<body>
+  <h2>Login</h2>
+  <form id="loginForm">
+    <input type="text" id="username" placeholder="Username" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <button type="submit">Login</button>
+  </form>
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem("token", data.token);
+        window.location.href = "/index.html";
+      } else {
+        alert("Login Failed");
+      }
+    });
+  </script>
+</body>
+</html> -->
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <style>
+    /* Body background with a gradient */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(to right, #4E65FF , #92EFFD); /* Purple to Blue gradient */
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Login container with a white background */
+    .login-container {
+      background-color: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      animation: slideIn 1s ease-out; /* Slide-in animation */
+    }
+
+    /* Keyframe for sliding the login container */
+    @keyframes slideIn {
+      0% {
+        transform: translateY(-30px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* Heading design */
+    h2 {
+      font-size: 30px;
+      color: #6a11cb;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    /* Input field design */
+    input {
+      padding: 12px;
+      margin: 10px 0;
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      box-sizing: border-box;
+      font-size: 16px;
+      transition: transform 0.3s, box-shadow 0.3s ease;
+    }
+
+    /* Input focus effect */
+    input:focus {
+      outline: none;
+      box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+      border-color: #6a11cb;
+      transform: scale(1.03);
+    }
+
+    /* Button design */
+    button {
+      background-color: #f67b20; /* Orange color */
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s;
+      width: 100%;
+    }
+
+    /* Button hover effect */
+    button:hover {
+      background-color: #ff8c3d;
+      transform: scale(1.05);
+    }
+
+    /* Button active state */
+    button:active {
+      background-color: #e06e1a;
+      transform: scale(1);
+    }
+
+    /* Form text under the form */
+    .form-description {
+      color: #333;
+      font-size: 14px;
+      margin-top: 15px;
+    }
+
+    /* Placeholder color */
+    input::placeholder {
+      color: #888;
+    }
+
+    /* Responsive Design - For screens smaller than 600px */
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .login-container {
+        padding: 20px;
+        width: 90%;
+      }
+
+      h2 {
+        font-size: 24px;
+      }
+
+      input {
+        font-size: 14px;
+      }
+
+      button {
+        font-size: 14px;
+      }
+    }
+
+    /* Responsive Design - For screens larger than 600px but smaller than 1200px */
+    @media (min-width: 600px) and (max-width: 1200px) {
+      .login-container {
+        width: 80%;
+      }
+
+      h2 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <input type="text" id="username" placeholder="Username" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  <script>
+   document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem("token", data.token);
+        window.location.href = "/index.html";
+      } else {
+        alert("Login Failed");
+      }
+    });
+  </script>
+</body>
+</html>

@@ -136,6 +136,21 @@ function showNotification(notification) {
     notification.remove();
   }, 3000);
 }
+async function loadFiles() {
+  const token = localStorage.getItem("token");
+  const response = await fetch("/api/files", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  if (response.status === 401) {
+    alert("Session expired. Please log in again.");
+    window.location.href = "/login.html";
+    return;
+  }
+
+  // Process file list...
+}
+
 
 // Add these CSS styles to your existing CSS file
 const styles = `

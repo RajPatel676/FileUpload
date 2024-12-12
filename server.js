@@ -4,6 +4,9 @@ const express = require("express");
 const multer = require("multer");
 const mongoose = require("mongoose");
 const { GridFSBucket, ObjectId } = require("mongodb");
+const User = require("./models/userModel");
+const jwt = require("jsonwebtoken");
+
 
 // Initialize express
 const app = express();
@@ -139,6 +142,46 @@ app.delete("/api/files/:id", validateFileId, async (req, res) => {
     res.status(500).json({ error: "Error deleting file" });
   }
 });
+
+// Sign-Up Route
+app.post("/api/signup", async (req, res) => {
+  try {
+    const { username, password, name } = req.body;
+
+    const userExists = await User.findOne({ username });
+    if (userExists) return res.status(400).json({ error: "User already exists" });
+
+    const newUser = new User({ username, password, name });
+    await newUser.save();
+
+    res.status(201).json({ message: "User created successfully" });
+  } catch (error) {
+    console.error("Sign-Up Error:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// Login Route
+app.post("/api/login", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+
+    const user = await User.findOne({ username });
+    if (!user || !(await user.comparePassword(password))) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+
+    const token = jwt.sign({ id: user._id, username: user.username }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    res.status(200).json({ token });
+  } catch (error) {
+    console.error("Login Error:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 
 // Export the Express API
 module.exports = app;
