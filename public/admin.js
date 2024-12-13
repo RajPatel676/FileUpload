@@ -133,7 +133,7 @@ function escapeHtml(unsafe) {
 
 //   if (response.status === 401) {
 //     alert("Session expired. Please log in again.");
-//     window.location.href = "/login.html";
+//     window.location.href = "/login2.html";
 //     return;
 //   }
 //   // Add styles to document

@@ -242,7 +242,7 @@
       </button>
     </form>
 
-    <p>Already have an account? <a href="login.html">Login here</a></p>
+    <p>Already have an account? <a href="index.html">Login here</a></p>
     <div id="formError" class="error-message"></div>
 
   </div>
@@ -296,7 +296,7 @@
           const data = await response.json();
           showSuccess("Signup successful! Redirecting...");
           setTimeout(() => {
-            window.location.href = "/login.html";
+            window.location.href = "/index.html";
           }, 2000);
         } else {
           const errorData = await response.json();

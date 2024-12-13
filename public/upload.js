@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const token = localStorage.getItem("token");
     if (!token) {
       alert("Please log in to access this page.");
-      window.location.href = "/login.html";
+      window.location.href = "/index.html";
     }
   });
 });
@@ -58,5 +58,5 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
   document.cookie = "authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
   // Redirect to login page or a logged-out screen
-  window.location.href = "/login.html";
+  window.location.href = "/index.html";
 });
