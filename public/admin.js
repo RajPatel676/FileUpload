@@ -1,6 +1,10 @@
 async function loadFiles() {
   try {
-    const response = await fetch("/api/files");
+    const response = await fetch("/api/files", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // Assuming token is stored in localStorage
+      },
+    });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -23,8 +27,8 @@ async function loadFiles() {
           <span>${escapeHtml(file.filename)}</span>
           <span>(${formatFileSize(file.size)})</span>
           <span class="file-date">${new Date(
-            file.uploadDate
-          ).toLocaleDateString()}</span>
+        file.uploadDate
+      ).toLocaleDateString()}</span>
         </div>
         <div class="file-actions">
           <button onclick="downloadFile('${file._id}', '${escapeHtml(
@@ -51,6 +55,7 @@ async function deleteFile(fileId) {
     const response = await fetch(`/api/files/${fileId}`, {
       method: "DELETE",
       headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
       },
     });
@@ -70,7 +75,11 @@ async function deleteFile(fileId) {
 
 async function downloadFile(fileId, filename) {
   try {
-    const response = await fetch(`/api/files/${fileId}/download`);
+    const response = await fetch(`/api/files/${fileId}/download`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // Assuming token is stored in localStorage
+      },
+    });
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -115,50 +124,26 @@ function escapeHtml(unsafe) {
     .replace(/'/g, "&#039;");
 }
 
-// Add notification functions
-function showError(message) {
-  const notification = document.createElement("div");
-  notification.className = "notification error";
-  notification.textContent = message;
-  showNotification(notification);
-}
 
-function showSuccess(message) {
-  const notification = document.createElement("div");
-  notification.className = "notification success";
-  notification.textContent = message;
-  showNotification(notification);
-}
+// async function loadFiles() {
+//   const token = localStorage.getItem("token");
+//   const response = await fetch("/api/files", {
+//     headers: { Authorization: `Bearer ${token}` },
+//   });
 
-function showNotification(notification) {
-  document.body.appendChild(notification);
-  setTimeout(() => {
-    notification.remove();
-  }, 3000);
-}
-async function loadFiles() {
-  const token = localStorage.getItem("token");
-  const response = await fetch("/api/files", {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-
-  if (response.status === 401) {
-    alert("Session expired. Please log in again.");
-    window.location.href = "/login.html";
-    return;
-  }
-  // Add styles to document
-const styleSheet = document.createElement("style");
-styleSheet.textContent = styles;
-document.head.appendChild(styleSheet);
-
+//   if (response.status === 401) {
+//     alert("Session expired. Please log in again.");
+//     window.location.href = "/login.html";
+//     return;
+//   }
+//   // Add styles to document
+// const styleSheet = document.createElement("style");
+// styleSheet.textContent = styles;
+// document.head.appendChild(styleSheet);
+//   // Process file list...
+// }
 // Initialize
 document.addEventListener("DOMContentLoaded", loadFiles);
-
-
-  // Process file list...
-}
-
 
 // Add these CSS styles to your existing CSS file
 const styles = `

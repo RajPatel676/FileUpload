@@ -15,6 +15,9 @@ async function uploadFiles() {
     const response = await fetch("/api/upload", {
       method: "POST",
       body: formData,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // Assuming token is stored in localStorage
+      },
     });
 
     if (response.ok) {
@@ -34,7 +37,7 @@ async function uploadFiles() {
       errorMessage.style.display = "none";
     }, 3000);
   }
- 
+
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -43,4 +46,15 @@ document.addEventListener("DOMContentLoaded", () => {
     alert("Please log in to access this page.");
     window.location.href = "/login.html";
   }
+});
+
+
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  // Clear user token from localStorage or cookies
+  localStorage.removeItem("token"); // Assuming you store the token here
+  localStorage.removeItem("user"); // Assuming you store the token here
+  document.cookie = "authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+  // Redirect to login page or a logged-out screen
+  window.location.href = "/login.html";
 });

@@ -1,66 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>File Upload System</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
-      }
-      .upload-container {
-        border: 2px dashed #ccc;
-        padding: 20px;
-        text-align: center;
-        margin-bottom: 20px;
-      }
-      .success-message {
-        color: green;
-        display: none;
-        margin-top: 10px;
-      }
-      .error-message {
-        color: red;
-        display: none;
-        margin-top: 10px;
-      }
-      .admin-link {
-/*         display: block;
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>File Upload System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .login-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .upload-container {
+      border: 2px dashed #ccc;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .success-message {
+      color: green;
+      display: none;
+      margin-top: 10px;
+    }
+
+    .error-message {
+      color: red;
+      display: none;
+      margin-top: 10px;
+    }
+
+    .admin-link {
+      /*         display: block;
         margin-top: 20px;
         text-align: right; */
-        display: block;
-        margin-bottom: 20px;
-        padding: 10px 20px; 
-        background-color: #007bff;
-        color: white; 
-        text-align: center; 
-        text-decoration: none;
-        border: none; 
-        border-radius: 5px; 
-        font-size: 16px; 
-        cursor: pointer; 
-        transition: background-color 0.3s ease;
-      }
-      .admin-link:hover{
-        background-color: #004085;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="upload-container">
-      <h2>File Upload System</h2>
-      <input type="file" id="fileInput" multiple />
-      <button onclick="uploadFiles()">Upload Files</button>
-      <div id="successMessage" class="success-message">
-        Files uploaded successfully!
-      </div>
-      <div id="errorMessage" class="error-message">Error uploading files.</div>
+      display: block;
+      margin-bottom: 20px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .admin-link:hover {
+      background-color: #004085;
+    }
+
+    .file-list {
+      margin-top: 20px;
+    }
+
+    .file-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .file-actions button {
+      margin-left: 10px;
+    }
+
+    .back-link {
+      display: block;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="login-container">
+    <h1>Welcome, User!</h1>
+    <button id="logoutBtn">Log Out</button>
+
+  </div>
+
+  <div class="upload-container">
+
+    <h2>File Upload System</h2>
+    <input type="file" id="fileInput" multiple />
+    <button onclick="uploadFiles()">Upload Files</button>
+    <div id="successMessage" class="success-message">
+      Files uploaded successfully!
     </div>
-    <a href="/admin.html" class="admin-link">Go to Admin Panel</a>
+    <div id="errorMessage" class="error-message">Error uploading files.</div>
+  </div>
+
+  <!-- <a href="/admin.html" class="admin-link">Go to Admin Panel</a> -->
+  <h2>Uploaded Files</h2>
+  <div id="fileList" class="file-list">
 
     <script src="upload.js"></script>
-  </body>
+    <script src="admin.js"></script>
+    <script src="notification.js"></script>
+</body>
+
 </html>

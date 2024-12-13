@@ -41,6 +41,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,7 +53,8 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background: linear-gradient(to right, #4E65FF,#92EFFD); /* Purple to Blue gradient */
+      background: linear-gradient(to right, #4E65FF, #92EFFD);
+      /* Purple to Blue gradient */
       margin: 0;
       font-family: Arial, sans-serif;
     }
@@ -66,7 +68,8 @@
       width: 100%;
       max-width: 400px;
       text-align: center;
-      animation: slideIn 1s ease-out; /* Slide-in animation */
+      animation: slideIn 1s ease-out;
+      /* Slide-in animation */
     }
 
     /* Keyframe for sliding the signup container */
@@ -75,6 +78,7 @@
         transform: translateY(-30px);
         opacity: 0;
       }
+
       100% {
         transform: translateY(0);
         opacity: 1;
@@ -111,7 +115,8 @@
 
     /* Button design */
     button {
-      background-color: #f67b20; /* Orange color */
+      background-color: #f67b20;
+      /* Orange color */
       color: white;
       padding: 12px 20px;
       border: none;
@@ -175,6 +180,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="signup-container">
     <!-- <h2>Sign-Up</h2>
@@ -185,21 +191,21 @@
     <button type="submit">Sign-Up</button>
   </form> -->
 
-  <h2>Signup</h2>
-  <form action="https://your-vercel-deployed-url/api/signup" method="POST"  id="signupForm">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required><br><br>
+    <h2>Signup</h2>
+    <form action="https://your-vercel-deployed-url/api/signup" method="POST" id="signupForm">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required><br><br>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required><br><br>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required><br><br>
 
-    <label for="name">Full Name:</label>
-    <input type="text" id="name" name="name" required><br><br>
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" name="name"><br><br>
 
-    <button type="submit">Sign Up</button>
-  </form>
+      <button type="submit">Sign Up</button>
+    </form>
 
-  <p>Already have an account? <a href="login.html">Login here</a></p>
+    <p>Already have an account? <a href="login.html">Login here</a></p>
   </div>
 
   <script>
@@ -224,4 +230,5 @@
     });
   </script>
 </body>
+
 </html>
