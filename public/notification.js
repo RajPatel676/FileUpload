@@ -1,23 +1,29 @@
 // Add notification functions
 function showError(message) {
-    const notification = document.createElement("div");
-    notification.className = "notification error";
-    notification.textContent = message;
-    showNotification(notification);
+  const notification = document.createElement("div");
+  const messageContainer = document.getElementById("messageContainer");
+  messageContainer.innerHTML = `<p style="color: red; margin-top: 10px;">${message}</p>`;
+  notification.className = "notification error";
+  notification.textContent = message;
+  showNotification(notification);
 }
 
 function showSuccess(message) {
-    const notification = document.createElement("div");
-    notification.className = "notification success";
-    notification.textContent = message;
-    showNotification(notification);
+  const notification = document.createElement("div");
+  notification.className = "notification success";
+
+  const messageContainer = document.getElementById("messageContainer");
+  messageContainer.innerHTML = `<p style="color: red; margin-top: 10px;">${message}</p>`;
+
+  notification.textContent = messageContainer;
+  showNotification(notification);
 }
 
 function showNotification(notification) {
-    document.body.appendChild(notification);
-    setTimeout(() => {
-        notification.remove();
-    }, 3000);
+  document.body.appendChild(notification);
+  setTimeout(() => {
+    notification.remove();
+  }, 3000);
 }
 
 const notificationstyles = `

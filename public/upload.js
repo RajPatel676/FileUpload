@@ -41,11 +41,13 @@ async function uploadFiles() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    alert("Please log in to access this page.");
-    window.location.href = "/login.html";
-  }
+  document.getElementById("signupForm").addEventListener("submit", async (e) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Please log in to access this page.");
+      window.location.href = "/login.html";
+    }
+  });
 });
 
 

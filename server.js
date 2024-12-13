@@ -207,10 +207,23 @@ app.post("/api/signup", async (req, res) => {
     await connectDB();
     const { username, password, name } = req.body;
 
-    // Input validation
-    if (!username || !password || !name) {
-      return res.status(400).json({ error: "All fields are required" });
+    const errors = {};
+
+    // Validate username
+    if (!username || username.length < 3) {
+      errors.username = "Username must be at least 3 characters long.";
     }
+
+    // Validate password
+    if (!password || password.length < 6) {
+      errors.password = "Password must be at least 6 characters long.";
+    }
+
+    // 'name' field is optional, no validation if it's empty
+    if (name && name.length < 3) {
+      errors.name = "Name must be at least 3 characters long.";
+    }
+
 
     // Check for existing user (case-insensitive)
     const existingUser = await User.findOne({
@@ -218,14 +231,18 @@ app.post("/api/signup", async (req, res) => {
     });
 
     if (existingUser) {
-      return res.status(400).json({ error: "Username already exists" });
+      return res.status(400).json({ error: { username: "Username already exists." } });
+    }
+    // More specific error handling
+    if (Object.keys(errors).length > 0) {
+      return res.status(400).json({ errors });
     }
 
     // Create new user
     const newUser = new User({
       username: username.toLowerCase(),
       password,
-      name
+      name: name || ""
     });
 
     // Validate input before saving
@@ -242,14 +259,6 @@ app.post("/api/signup", async (req, res) => {
 
   } catch (error) {
     console.error("Sign-Up Error:", error);
-
-    // More specific error handling
-    if (error.name === 'ValidationError') {
-      return res.status(400).json({
-        error: Object.values(error.errors)[0].message
-      });
-    }
-
     // Generic server error
     res.status(500).json({ error: "Internal server error" });
   }
@@ -261,8 +270,12 @@ app.post("/api/login", async (req, res) => {
     const { username, password } = req.body;
 
     const user = await User.findOne({ username });
-    if (!user || !(await user.comparePassword(password))) {
-      return res.status(401).json({ error: "Invalid credentials" });
+    if (!user) {
+      return res.status(401).json({ error: "Invalid username" });
+    }
+    const match = await user.comparePassword(password, user.password)
+    if (!match) {
+      return res.status(400).json({ error: 'Invalid password' });
     }
     console.log(process.env.JWT_SECRET)
     const token = jwt.sign({ id: user._id, username: user.username }, process.env.JWT_SECRET, {

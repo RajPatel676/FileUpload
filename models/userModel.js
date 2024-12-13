@@ -3,32 +3,29 @@ const bcrypt = require("bcrypt");
 const validator = require("validator");
 
 const userSchema = new mongoose.Schema({
-  username: { 
-    type: String, 
+  username: {
+    type: String,
     required: [true, "Username is required"],
     unique: true,
     lowercase: true,
     trim: true,
-    minlength: [3, "Username must be at least 3 characters long"],
+    minlength: [3],
     maxlength: [20, "Username must be less than 20 characters"],
     validate: {
-      validator: function(v) {
+      validator: function (v) {
         return /^[a-zA-Z0-9_]+$/.test(v);
       },
       message: "Username can only contain letters, numbers, and underscores"
     }
   },
-  password: { 
-    type: String, 
+  password: {
+    type: String,
     required: [true, "Password is required"],
-    minlength: [8, "Password must be at least 8 characters long"]
+    minlength: [6]
   },
-  name: { 
-    type: String, 
-    required: [true, "Name is required"],
+  name: {
+    type: String,
     trim: true,
-    minlength: [2, "Name must be at least 2 characters long"],
-    maxlength: [50, "Name must be less than 50 characters"]
   },
   createdAt: {
     type: Date,
@@ -40,7 +37,7 @@ const userSchema = new mongoose.Schema({
 userSchema.pre("save", async function (next) {
   // Only hash the password if it has been modified (or is new)
   if (!this.isModified("password")) return next();
-  
+
   try {
     // Use a more secure salt round (12-14 is recommended)
     const salt = await bcrypt.genSalt(14);
@@ -57,12 +54,12 @@ userSchema.methods.comparePassword = async function (enteredPassword) {
 };
 
 // Custom validation for input
-userSchema.methods.validateInput = function() {
+userSchema.methods.validateInput = function () {
   if (!validator.isLength(this.username, { min: 3, max: 20 })) {
     throw new Error("Username must be between 3 and 20 characters");
   }
-  if (!validator.isLength(this.password, { min: 8 })) {
-    throw new Error("Password must be at least 8 characters long");
+  if (!validator.isLength(this.password, { min: 6 })) {
+    throw new Error("Password must be at least 6 characters long");
   }
   if (!validator.isAlphanumeric(this.username)) {
     throw new Error("Username can only contain letters and numbers");

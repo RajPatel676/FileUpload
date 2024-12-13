@@ -1,46 +1,9 @@
-<!-- <!DOCTYPE html>
-<html>
-<head>
-  <title>Login</title>
-</head>
-<body>
-  <h2>Login</h2>
-  <form id="loginForm">
-    <input type="text" id="username" placeholder="Username" required />
-    <input type="password" id="password" placeholder="Password" required />
-    <button type="submit">Login</button>
-  </form>
-  <script>
-    document.getElementById("loginForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const username = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
-
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem("token", data.token);
-        window.location.href = "/index.html";
-      } else {
-        alert("Login Failed");
-      }
-    });
-  </script>
-</body>
-</html> -->
-
-
-
-
 <!DOCTYPE html>
 <html>
 
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
   <style>
     /* Body background with a gradient */
@@ -63,9 +26,7 @@
       box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
       width: 100%;
       max-width: 400px;
-      text-align: center;
       animation: slideIn 1s ease-out;
-      /* Slide-in animation */
     }
 
     /* Keyframe for sliding the login container */
@@ -87,6 +48,7 @@
       color: #6a11cb;
       margin-bottom: 20px;
       font-weight: bold;
+      text-align: center
     }
 
     /* Input field design */
@@ -98,7 +60,7 @@
       border: 1px solid #ddd;
       box-sizing: border-box;
       font-size: 16px;
-      transition: transform 0.3s, box-shadow 0.3s ease;
+      transition: transform 0.3s, box-shadow 0.9s ease;
     }
 
     /* Input focus effect */
@@ -112,7 +74,6 @@
     /* Button design */
     button {
       background-color: #f67b20;
-      /* Orange color */
       color: white;
       padding: 12px 20px;
       border: none;
@@ -127,19 +88,13 @@
     button:hover {
       background-color: #ff8c3d;
       transform: scale(1.05);
+      font-size: large;
     }
 
     /* Button active state */
     button:active {
       background-color: #e06e1a;
       transform: scale(1);
-    }
-
-    /* Form text under the form */
-    .form-description {
-      color: #333;
-      font-size: 14px;
-      margin-top: 15px;
     }
 
     /* Placeholder color */
@@ -175,11 +130,71 @@
     @media (min-width: 600px) and (max-width: 1200px) {
       .login-container {
         width: 80%;
-        max-width: 500px;
       }
 
       h2 {
         font-size: 28px;
+      }
+    }
+
+    .error-message {
+      color: red;
+      font-size: 12px;
+      margin-top: 0px;
+    }
+
+    p {
+      text-align: center;
+    }
+
+    /* Round Sign-Up Button */
+    .round-btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 50px;
+      /* Makes the button round */
+      background-color: #f67b20;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .round-btn:hover {
+      background-color: #ff8c3d;
+      font-size: large;
+      transform: scale(1.05);
+    }
+
+    .round-btn:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    /* Spinner animation */
+    .spinner {
+      border: 4px solid #f3f3f3;
+      /* Light grey */
+      border-top: 4px solid white;
+      /* White spinner */
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
       }
     }
   </style>
@@ -187,25 +202,23 @@
 
 <body>
   <div class="login-container">
-    <!-- <h2>Login</h2>
-    <form id="loginForm">
-      <input type="text" id="username" placeholder="Username" required />
-      <input type="password" id="password" placeholder="Password" required />
-      <button type="submit">Login</button>
-    </form> -->
-
     <h2>Login</h2>
     <form action="/api/login" method="POST" id="loginForm">
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username" required><br><br>
+      <label for="username">Username<span class="required" style="color: red;">*</label>
+      <input type="text" id="username" name="username" placeholder="Enter Username" required><br>
+      <div id="usernameError" class="error-message"></div>
 
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required><br><br>
+      <label for="password">Password<span class="required" style="color: red;">*</label>
+      <input type="password" id="password" name="password" required placeholder="Enter Password"><br>
+      <div id="passwordError" class="error-message"></div>
 
-      <button type="submit">Login</button>
+      <button type="submit" id="signupButton" class="round-btn">Login
+        <span id="loadingSpinner" style="display:none;" class="spinner"></span>
+      </button>
     </form>
 
     <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
+    <div id="formError" class="error-message"></div>
   </div>
 
   <script>
@@ -214,6 +227,23 @@
       const username = document.getElementById("username").value;
       const password = document.getElementById("password").value;
 
+      const usernameErrorEl = document.getElementById("usernameError");
+      const passwordErrorEl = document.getElementById("passwordError");
+      const formErrorEl = document.getElementById("formError");
+
+
+      if (usernameErrorEl) usernameErrorEl.textContent = "";
+      if (passwordErrorEl) passwordErrorEl.textContent = "";
+      if (formErrorEl) formErrorEl.textContent = ""
+
+      // Show the spinner and disable the button
+      const signupButton = document.getElementById("signupButton");
+      const loadingSpinner = document.getElementById("loadingSpinner");
+      signupButton.disabled = true;  // Disable the button to prevent multiple clicks
+      loadingSpinner.style.display = "inline";  // Show the spinner
+      signupButton.innerHTML = 'Loading...'; // Change button text to "Loading..."
+
+
       try {
         const response = await fetch("/api/login", {
           method: "POST",
@@ -221,23 +251,56 @@
           body: JSON.stringify({ username, password }),
         });
 
+        // Hide the spinner and enable the button again
+        loadingSpinner.style.display = "none";  // Hide the spinner
+        signupButton.disabled = false;  // Enable the button again
+        signupButton.innerHTML = 'Sign Up';  // Revert the button text back to "Sign Up"
+
         if (response.ok) {
           const data = await response.json();
           localStorage.setItem("token", data.token);
           localStorage.setItem("user", JSON.stringify(data.user));
-          showSuccess("Login successful! Redirecting...");
+          // showSuccess("Login successful! Redirecting...");
           setTimeout(() => {
             window.location.href = "/index.html";
           }, 2000); // Redirect after 2 seconds
         } else {
-          const error = await response.json();
-          showError(error.message || "Login failed. Please try again.");
+          const errorData = await response.json();
+          if (errorData.errors) {
+            // Display field-specific errors
+            if (errorData.errors.username) {
+              document.getElementById("usernameError").textContent = errorData.errors.username || "";
+            }
+            if (errorData.errors.password) {
+              document.getElementById("passwordError").textContent = errorData.errors.password;
+            }
+          } else if (errorData.error) {
+            // Display general error
+            document.getElementById("formError").textContent = errorData.error;
+          }
+          else {
+            document.getElementById("formError").textContent = "An unknown error occurred.";
+          }
         }
       } catch (err) {
-        console.error("Login error:", err);
-        showError("An error occurred while logging in.");
+        console.error("Login error:", err); document.getElementById("formError").textContent =
+          "An error occurred while logging in. Please try again.";
+        loadingSpinner.style.display = "none";  // Hide spinner if error occurs
+        signupButton.disabled = false;  // Enable the button again
+        signupButton.innerHTML = 'Sign Up';  // Revert the button text back to "Sign Up"
       }
     });
+
+    function showError(message) {
+      const errorContainer = document.getElementById("errorContainer");
+      errorContainer.innerHTML = `<p style="color: red; margin-top: 0;">${message}</p>`;
+    }
+
+    function showSuccess(message) {
+      const formError = document.getElementById("formError");
+      formError.style.color = "green";
+      formError.textContent = message;
+    }
   </script>
   <script src="notification.js"></script>
 </body>
