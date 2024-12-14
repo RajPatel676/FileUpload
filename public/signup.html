@@ -224,7 +224,7 @@
   </form> -->
 
     <h2>Signup</h2>
-    <form action="https://your-vercel-deployed-url/api/signup" method="POST" id="signupForm">
+    <form method="POST" id="signupForm">
       <label for="username">Username<span class="required">*</label>
       <input type="text" id="username" name="username" placeholder="Enter Username" required><br>
       <div id="usernameError" class="error-message"></div>
@@ -242,7 +242,7 @@
       </button>
     </form>
 
-    <p>Already have an account? <a href="index.html">Login here</a></p>
+    <p>Already have an account? <a href="login.html">Login here</a></p>
     <div id="formError" class="error-message"></div>
 
   </div>
@@ -275,7 +275,7 @@
       const signupButton = document.getElementById("signupButton");
       const loadingSpinner = document.getElementById("loadingSpinner");
       signupButton.disabled = true;  // Disable the button to prevent multiple clicks
-      loadingSpinner.style.display = "inline";  // Show the spinner
+      // loadingSpinner.style.display = "inline";  // Show the spinner
       signupButton.innerHTML = 'Loading...'; // Change button text to "Loading..."
 
 
@@ -296,7 +296,7 @@
           const data = await response.json();
           showSuccess("Signup successful! Redirecting...");
           setTimeout(() => {
-            window.location.href = "/index.html";
+            window.location.href = "/login.html";
           }, 2000);
         } else {
           const errorData = await response.json();

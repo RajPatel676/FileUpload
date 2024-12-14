@@ -21,12 +21,22 @@ async function uploadFiles() {
     });
 
     if (response.ok) {
-      successMessage.style.display = "block";
+      // successMessage.style.display = "block";(method-1)
+      // Show success message(method-2)
+      document.getElementById('successMessage').style.display = 'block';
       errorMessage.style.display = "none";
       fileInput.value = "";
+
+      // Hide success message after 2 seconds and reload the page
+      setTimeout(function () {
+        window.location.reload(); // Reload the page
+      }, 1000);
+
+      //successMessage clear time is 2s
       setTimeout(() => {
         successMessage.style.display = "none";
-      }, 3000);
+      }, 2000);
+
     } else {
       throw new Error("Upload failed");
     }
@@ -41,13 +51,13 @@ async function uploadFiles() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("signupForm").addEventListener("submit", async (e) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      alert("Please log in to access this page.");
-      window.location.href = "/index.html";
-    }
-  });
+  // document.getElementById("signupForm").addEventListener("submit", async (e) => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("Please log in to access this page.");
+    window.location.href = "/login.html";
+  }
+  // });
 });
 
 
@@ -58,5 +68,10 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
   document.cookie = "authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
   // Redirect to login page or a logged-out screen
-  window.location.href = "/index.html";
+  window.location.href = "/login.html";
 });
+// < !--Add GSAP CDN link before your custom script-- >
+
+
+
+

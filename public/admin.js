@@ -23,20 +23,45 @@ async function loadFiles() {
       fileItem.className = "file-item";
 
       fileItem.innerHTML = `
-        <div class="file-info">
+        <div class="file-info"  style=" background-color: white;
+    padding: 16px;
+    margin: 10px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    flex-direction: column;
+    align-items: center;">
           <span>${escapeHtml(file.filename)}</span>
           <span>(${formatFileSize(file.size)})</span>
           <span class="file-date">${new Date(
         file.uploadDate
       ).toLocaleDateString()}</span>
         </div>
-        <div class="file-actions">
+        <div class="file-actions"  style=" background-color: white;
+    padding: 15px;
+    margin:0;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    align-items: center;
+    flex-direction: column;">
           <button onclick="downloadFile('${file._id}', '${escapeHtml(
         file.filename
       )}')" 
-                  class="download-btn">Download</button>
+                  class="download-btn" style="background-color: #4CAF50;padding: 6px 12px;
+    margin-left: 8px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    display:"inline-block"
+    margin-bottom:10px ;">Download</button>
           <button onclick="deleteFile('${file._id}')" 
-                  class="delete-btn">Delete</button>
+                  class="delete-btn" style="background-color: #DB073D;padding: 6px 12px;
+    margin-left: 8px;
+    border-radius: 4px;
+    border: none;
+    display:"inline-block"
+    cursor: pointer;">Delete</button>
         </div>
       `;
 
@@ -48,8 +73,33 @@ async function loadFiles() {
   }
 }
 
+// Show delete confiramaion message
+// function showConfirmationDialog(message) {
+//   return new Promise((resolve) => {
+//     const modal = document.getElementById("confirmModal");
+//     const confirmationMessage = document.getElementById("confirmationMessage");
+//     confirmationMessage.textContent = message;
+//     modal.style.display = "flex";
+
+//     const confirmYes = document.getElementById("confirmYes");
+//     const confirmNo = document.getElementById("confirmNo");
+
+//     confirmYes.onclick = () => {
+//       modal.style.display = "none";
+//       resolve(true); // User confirmed
+//     };
+
+//     confirmNo.onclick = () => {
+//       modal.style.display = "none";
+//       resolve(false); // User canceled
+//     };
+//   });
+// }
+
 async function deleteFile(fileId) {
   if (!confirm("Are you sure you want to delete this file?")) return;
+  // const confirm = await showConfirmationDialog("Are you sure you want to delete this file?");
+  // if (!confirm) return;
 
   try {
     const response = await fetch(`/api/files/${fileId}`, {
@@ -145,6 +195,7 @@ function escapeHtml(unsafe) {
 // Initialize
 document.addEventListener("DOMContentLoaded", loadFiles);
 
+
 // Add these CSS styles to your existing CSS file
 const styles = `
   .notification {
@@ -178,11 +229,13 @@ const styles = `
   }
 
   .file-item {
+    background-color: white;
+    padding: 16px;
+    margin: 10px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px;
-    border-bottom: 1px solid #eee;
+    flex-direction: column;
   }
 
   .file-date {
@@ -197,7 +250,19 @@ const styles = `
     border-radius: 4px;
     border: none;
     cursor: pointer;
+     animation: dode 1s ease-out;
   }
+     @keyframes dode {
+      0% {
+        transform: translateY(-30px);
+        opacity: 0;
+      }
+
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
 
   .download-btn {
     background-color: #4CAF50;

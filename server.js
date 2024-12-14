@@ -297,14 +297,14 @@ app.post("/api/login", async (req, res) => {
 
 
 // Export the Express API
-module.exports = app;
+// module.exports = app;
 
 // localhost Serve static files from the 'public' folder
-// app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public")));
 
-// const PORT = 3000;
+const PORT = 3000;
 
-// app.listen(PORT, () => {
-//   console.log(`Server is running on http://localhost:${PORT}`);
-// });
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
 
